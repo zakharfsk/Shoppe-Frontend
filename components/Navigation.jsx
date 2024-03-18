@@ -10,6 +10,8 @@ import FirstScreen from "../screens/IntroductionScreens/FirstScreen";
 import SecondScreen from "../screens/IntroductionScreens/SecondScreen";
 import {SafeAreaProvider} from "react-native-safe-area-context";
 import GetStartedScreen from "../screens/GetStartedScreen";
+import LoginScreen from "../screens/LoginScreen";
+import RegisterScreen from "../screens/RegisterScreen";
 
 const BottomTabNavigator = createBottomTabNavigator();
 const NativeStackNavigator = createNativeStackNavigator();
@@ -33,10 +35,12 @@ const Navigation = () => {
             <NavigationContainer>
                 {newUser === true ? (
                     <NativeStackNavigator.Navigator screenOptions={{headerShown: false}}>
-                        <NativeStackNavigator.Screen name="FirstScreen" component={FirstScreen}/>
-                        <NativeStackNavigator.Screen name="SecondScreen" component={SecondScreen}/>
-                        <NativeStackNavigator.Screen name="ThirdScreen" component={ThirdScreen}/>
-                        <NativeStackNavigator.Screen name="GetStartedScreen" component={GetStartedScreen}/>
+                        <NativeStackNavigator.Screen name="FirstStep" component={FirstScreen}/>
+                        <NativeStackNavigator.Screen name="SecondStep" component={SecondScreen}/>
+                        <NativeStackNavigator.Screen name="ThirdStep" component={ThirdScreen}/>
+                        <NativeStackNavigator.Screen name="GetStarted" component={GetStartedScreen}/>
+                        <NativeStackNavigator.Screen name="Login" component={LoginScreen}/>
+                        <NativeStackNavigator.Screen name="Register" component={RegisterScreen}/>
                     </NativeStackNavigator.Navigator>
                 ) : (
                     <BottomTabNavigator.Navigator>
