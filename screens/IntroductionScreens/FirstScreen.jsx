@@ -2,14 +2,12 @@ import React from 'react';
 import {Text} from "react-native";
 import FirstIntroPhoto from "../../assets/introduction/1.svg";
 import {
-    Description,
     NavigationButtonLayout,
     NextButton,
-    StepCounter,
-    Title,
-    Container
+    StepCounter
 } from "../../styles/introduction.styles";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
+import {Container, Description, Title} from "../../styles/base.styles";
 
 
 const FirstScreen = ({navigation}) => {
@@ -29,8 +27,8 @@ const FirstScreen = ({navigation}) => {
             <Title>Manage your tasks</Title>
             <Description>You can easily manage all of your daily tasks in DoMe for free</Description>
             <NavigationButtonLayout>
-                <NextButton onPress={() => navigation.navigate('SecondScreen')}>
-                    <Text style={{color: 'white', fontSize: 16}}>Next</Text>
+                <NextButton onPress={() => navigation.navigate('SecondStep')}>
+                    <Text style={{color: 'white', fontSize: 16, textTransform: 'uppercase'}}>Next</Text>
                 </NextButton>
             </NavigationButtonLayout>
         </Container>

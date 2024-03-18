@@ -3,14 +3,12 @@ import SecondIntroPhoto from "../../assets/introduction/2.svg";
 import {Text} from "react-native";
 import {
     BackButton,
-    Container,
-    Description,
     NavigationButtonLayout,
     NextButton,
-    StepCounter,
-    Title
+    StepCounter
 } from "../../styles/introduction.styles";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
+import {Container, Description, Title} from "../../styles/base.styles";
 
 const SecondScreen = ({navigation}) => {
     const insets = useSafeAreaInsets();
@@ -29,11 +27,15 @@ const SecondScreen = ({navigation}) => {
             <Title>Create daily routine</Title>
             <Description>In Uptodo you can create your personalized routine to stay productive</Description>
             <NavigationButtonLayout>
-                <NextButton onPress={() => navigation.navigate('ThirdScreen')}>
-                    <Text style={{color: 'white', fontSize: 16}}>Next</Text>
+                <NextButton onPress={() => navigation.navigate('ThirdStep')}>
+                    <Text style={{color: 'white', fontSize: 16, textTransform: 'uppercase'}}>Next</Text>
                 </NextButton>
-                <BackButton onPress={() => navigation.navigate('FirstScreen')}>
-                    <Text style={{color: 'rgba(255, 255, 255, 0.44)', fontSize: 16}}>Back</Text>
+                <BackButton onPress={() => navigation.navigate('FirstStep')}>
+                    <Text style={{
+                        color: 'rgba(255, 255, 255, 0.44)',
+                        fontSize: 16,
+                        textTransform: 'uppercase'
+                    }}>Back</Text>
                 </BackButton>
             </NavigationButtonLayout>
         </Container>

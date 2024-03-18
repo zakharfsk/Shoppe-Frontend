@@ -3,14 +3,12 @@ import {Text} from "react-native";
 import ThirdIntroPhoto from "../../assets/introduction/3.svg";
 import {
     BackButton,
-    Container,
-    Description,
     NavigationButtonLayout,
     NextButton,
-    StepCounter,
-    Title
+    StepCounter
 } from "../../styles/introduction.styles";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
+import {Container, Description, Title} from "../../styles/base.styles";
 
 const ThirdScreen = ({navigation}) => {
     const insets = useSafeAreaInsets();
@@ -29,11 +27,15 @@ const ThirdScreen = ({navigation}) => {
             <Title>Organize your tasks</Title>
             <Description>You can organize your daily tasks by adding your tasks into separate categories</Description>
             <NavigationButtonLayout>
-                <NextButton onPress={() => navigation.navigate('GetStartedScreen')}>
-                    <Text style={{color: 'white', fontSize: 16}}>Get Started</Text>
+                <NextButton onPress={() => navigation.navigate('GetStarted')}>
+                    <Text style={{color: 'white', fontSize: 16, textTransform: 'uppercase'}}>Get Started</Text>
                 </NextButton>
-                <BackButton onPress={() => navigation.navigate('SecondScreen')}>
-                    <Text style={{color: 'rgba(255, 255, 255, 0.44)', fontSize: 16}}>Back</Text>
+                <BackButton onPress={() => navigation.navigate('SecondStep')}>
+                    <Text style={{
+                        color: 'rgba(255, 255, 255, 0.44)',
+                        fontSize: 16,
+                        textTransform: 'uppercase'
+                    }}>Back</Text>
                 </BackButton>
             </NavigationButtonLayout>
         </Container>
