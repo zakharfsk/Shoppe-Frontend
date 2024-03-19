@@ -22,7 +22,6 @@ export const Description = styled.Text`
 
 export const FieldsLayout = styled.SafeAreaView`
     flex: 1;
-    padding: 12px;
     margin: 12px;
     gap: 25px;
 `

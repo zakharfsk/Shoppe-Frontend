@@ -30,6 +30,7 @@ const Navigation = () => {
 
     useEffect(() => {
         (async () => {
+
             const value = await AsyncStorage.getItem('user')
             if (value === null) {
                 setNewUser(true)
@@ -37,7 +38,7 @@ const Navigation = () => {
             }
             return false;
         })()
-    })
+    }, [])
 
     const handlePressOutside = () => {
         Keyboard.dismiss();
@@ -48,11 +49,11 @@ const Navigation = () => {
             <SafeAreaProvider>
                 <NavigationContainer>
                     <NativeStackNavigator.Navigator screenOptions={{headerShown: false}}>
-                        <NativeStackNavigator.Screen name="Register" component={RegisterScreen}/>
                         <NativeStackNavigator.Screen name="FirstStep" component={FirstScreen}/>
                         <NativeStackNavigator.Screen name="SecondStep" component={SecondScreen}/>
                         <NativeStackNavigator.Screen name="ThirdStep" component={ThirdScreen}/>
                         <NativeStackNavigator.Screen name="GetStarted" component={GetStartedScreen}/>
+                        <NativeStackNavigator.Screen name="Register" component={RegisterScreen}/>
                         <NativeStackNavigator.Screen name="Login" component={LoginScreen}/>
                         <NativeStackNavigator.Screen name="BottomTabNav" component={BottomTabNavigation}
                                                      options={{gestureEnabled: false}}/>

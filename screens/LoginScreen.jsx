@@ -6,6 +6,7 @@ import {Formik} from "formik";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 import * as Yup from 'yup';
 import {Toast} from "react-native-ui-lib";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const LoginSchema = Yup.object().shape({
     username: Yup.string()
@@ -23,15 +24,16 @@ const LoginScreen = ({navigation}) => {
     const [buttonDisabled, setButtonDisabled] = useState(true);
     const insets = useSafeAreaInsets();
 
-    const handleSubmit = async (values) => {
+    const handleSubmitForm = async (values) => {
+        console.log(values)
         if (values.username === 'admin' && values.password === 'admin') {
+            await AsyncStorage.setItem('user', JSON.stringify({username: values.username, password: values.password}))
             try {
                 navigation.navigate('BottomTabNav')
             } catch (e) {
                 console.log(e)
             }
-        }
-        else{
+        } else {
             alert('Invalid credentials');
         }
     }
@@ -60,10 +62,10 @@ const LoginScreen = ({navigation}) => {
             </View>
             <Formik
                 initialValues={{username: '', password: ''}}
-                onSubmit={handleSubmit}
+                onSubmit={handleSubmitForm}
                 validationSchema={LoginSchema}
                 validate={validateChanges}>
-                {({handleChange, handleBlur, values, errors}) => {
+                {({handleChange, handleBlur, handleSubmit, values, errors}) => {
                     return (
                         <FieldsLayout>
                             <View>
