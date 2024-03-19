@@ -12,9 +12,18 @@ import {SafeAreaProvider} from "react-native-safe-area-context";
 import GetStartedScreen from "../screens/GetStartedScreen";
 import LoginScreen from "../screens/LoginScreen";
 import RegisterScreen from "../screens/RegisterScreen";
+import {Keyboard, TouchableWithoutFeedback} from "react-native";
 
 const BottomTabNavigator = createBottomTabNavigator();
 const NativeStackNavigator = createNativeStackNavigator();
+
+const BottomTabNavigation = () => {
+    return (
+        <BottomTabNavigator.Navigator>
+            <BottomTabNavigator.Screen name="Home" component={HomeScreen}/>
+        </BottomTabNavigator.Navigator>
+    )
+}
 
 const Navigation = () => {
     const [newUser, setNewUser] = useState(false)
@@ -30,25 +39,27 @@ const Navigation = () => {
         })()
     })
 
+    const handlePressOutside = () => {
+        Keyboard.dismiss();
+    };
+
     return (
-        <SafeAreaProvider>
-            <NavigationContainer>
-                {newUser === true ? (
+        <TouchableWithoutFeedback onPress={handlePressOutside}>
+            <SafeAreaProvider>
+                <NavigationContainer>
                     <NativeStackNavigator.Navigator screenOptions={{headerShown: false}}>
+                        <NativeStackNavigator.Screen name="Register" component={RegisterScreen}/>
                         <NativeStackNavigator.Screen name="FirstStep" component={FirstScreen}/>
                         <NativeStackNavigator.Screen name="SecondStep" component={SecondScreen}/>
                         <NativeStackNavigator.Screen name="ThirdStep" component={ThirdScreen}/>
                         <NativeStackNavigator.Screen name="GetStarted" component={GetStartedScreen}/>
                         <NativeStackNavigator.Screen name="Login" component={LoginScreen}/>
-                        <NativeStackNavigator.Screen name="Register" component={RegisterScreen}/>
+                        <NativeStackNavigator.Screen name="BottomTabNav" component={BottomTabNavigation}
+                                                     options={{gestureEnabled: false}}/>
                     </NativeStackNavigator.Navigator>
-                ) : (
-                    <BottomTabNavigator.Navigator>
-                        <BottomTabNavigator.Screen name="Start" component={HomeScreen}/>
-                    </BottomTabNavigator.Navigator>
-                )}
-            </NavigationContainer>
-        </SafeAreaProvider>
+                </NavigationContainer>
+            </SafeAreaProvider>
+        </TouchableWithoutFeedback>
     )
 };
 

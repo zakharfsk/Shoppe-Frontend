@@ -16,6 +16,7 @@ export const BackButton = styled.Pressable`
     justify-content: center;
     padding: 12px 24px;
     margin: 0 20px;
+    text-align: ;
 `
 
 export const NavigationButtonLayout = styled.SafeAreaView`
