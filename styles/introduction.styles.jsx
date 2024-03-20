@@ -1,7 +1,7 @@
 import styled from "styled-components/native";
 
 
-export const NextButton = styled.Pressable`
+export const NextButton = styled.TouchableOpacity`
     background-color: rgba(136, 117, 255, 1);
     color: white;
     align-items: center;
@@ -11,12 +11,11 @@ export const NextButton = styled.Pressable`
     margin: 0 20px;
 `
 
-export const BackButton = styled.Pressable`
+export const BackButton = styled.TouchableOpacity`
     align-items: center;
     justify-content: center;
     padding: 12px 24px;
     margin: 0 20px;
-    text-align: ;
 `
 
 export const NavigationButtonLayout = styled.SafeAreaView`
@@ -42,7 +41,7 @@ export const StepCounter = styled.Text`
     margin: 30px;
 `
 
-export const LoginButton = styled.Pressable`
+export const LoginButton = styled.TouchableOpacity`
     background-color: rgba(136, 117, 255, 1);
     color: white;
     align-items: center;
@@ -52,7 +51,7 @@ export const LoginButton = styled.Pressable`
     margin: 0 20px;
 `
 
-export const CreateAccountButton = styled.Pressable`
+export const CreateAccountButton = styled.TouchableOpacity`
     background-color: rgba(0, 0, 0, 0);
     color: white;
     align-items: center;

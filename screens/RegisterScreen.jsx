@@ -5,6 +5,7 @@ import {Pressable, TextInput, View} from "react-native";
 import {Formik} from "formik";
 import * as Yup from "yup";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const RegisterSchema = Yup.object().shape({
     username: Yup.string()
@@ -29,6 +30,10 @@ const RegisterScreen = ({navigation}) => {
 
     const handleSubmitForm = async (values) => {
         try {
+            await AsyncStorage.setItem('user', JSON.stringify({
+                username: values.username,
+                password: values.password
+            }))
             navigation.navigate('Login')
         } catch (e) {
             console.log(e)

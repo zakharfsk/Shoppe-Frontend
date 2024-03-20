@@ -25,16 +25,16 @@ const LoginScreen = ({navigation}) => {
     const insets = useSafeAreaInsets();
 
     const handleSubmitForm = async (values) => {
-        console.log(values)
-        if (values.username === 'admin' && values.password === 'admin') {
-            await AsyncStorage.setItem('user', JSON.stringify({username: values.username, password: values.password}))
-            try {
+        let user = await AsyncStorage.getItem('user')
+
+        if (user) {
+            let user_data = JSON.parse(user)
+            if (values.username === user_data.username && values.password === user_data.password) {
+                await AsyncStorage.setItem('isLogged', 'true')
                 navigation.navigate('BottomTabNav')
-            } catch (e) {
-                console.log(e)
+            } else {
+                alert('Invalid credentials');
             }
-        } else {
-            alert('Invalid credentials');
         }
     }
 
@@ -117,28 +117,28 @@ const LoginScreen = ({navigation}) => {
                                     color={buttonDisabled && 'rgba(255, 255, 255, 0.5)' || 'rgba(255, 255, 255, 0.87)'}
                                 >Login</Title>
                             </Button>
+                            <View style={{
+                                flex: 1,
+                                flexDirection: 'row',
+                                justifyContent: 'center',
+                                alignItems: 'flex-end',
+                                gap: 5
+                            }}>
+                                <Title color={"rgba(151, 151, 151, 1)"} fontSize={"12px"} margin={"0px"}>
+                                    Don’t have an account?
+                                </Title>
+                                <Button onPress={() => navigation.navigate('Register')}>
+                                    <Title
+                                        margin={"0px"}
+                                        fontSize={"12px"}
+                                        color={'rgba(255, 255, 255, 0.87)'}
+                                    >Register</Title>
+                                </Button>
+                            </View>
                         </FieldsLayout>
                     )
                 }}
             </Formik>
-            <View style={{
-                flex: 1,
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignItems: 'flex-end',
-                gap: 5
-            }}>
-                <Title color={"rgba(151, 151, 151, 1)"} fontSize={"12px"} margin={"0px"}>
-                    Don’t have an account?
-                </Title>
-                <Button onPress={() => navigation.navigate('Register')}>
-                    <Title
-                        margin={"0px"}
-                        fontSize={"12px"}
-                        color={'rgba(255, 255, 255, 0.87)'}
-                    >Register</Title>
-                </Button>
-            </View>
         </Container>
     )
 }
