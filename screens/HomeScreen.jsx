@@ -1,10 +1,11 @@
-import {Button, Container} from "../styles/base.styles";
+import {Button, Container, Description} from "../styles/base.styles";
 import Header from "../components/Header";
 import React, {useEffect, useState} from "react";
 import NoTask from "../components/NoTask";
 import Task from "../components/Task";
 import {ActivityIndicator, Alert, FlatList, RefreshControl, VirtualizedList} from "react-native";
-import SearchBar from "../components/SearchBar";
+// import SearchBar from "../components/SearchBar";
+import { SearchBar } from '@rneui/themed';
 import axios from "axios";
 
 const HomeScreen = ({navigation}) => {
@@ -32,8 +33,13 @@ const HomeScreen = ({navigation}) => {
 
     if (isLoading) {
         return (
-            <Container>
+            <Container style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: 'rgba(54, 54, 54, 1)',
+            }}>
                 <ActivityIndicator size="large" color="white"/>
+                <Description>Loading...</Description>
             </Container>
         )
     }
@@ -51,34 +57,41 @@ const HomeScreen = ({navigation}) => {
         return (
             <Container>
                 <Header text={"Home"}/>
-                <SearchBar/>
-                <VirtualizedList
+                <SearchBar
+                    containerStyle={{
+                        borderRadius: 4,
+                        margin: 12,
+                        borderColor: 'rgba(151, 151, 151, 1)',
+                        backgroundColor: 'rgba(29, 29, 29, 1)',
+                }}
+                    inputContainerStyle={{
+                        backgroundColor: 'rgba(29, 29, 29, 1)',
+                        padding: 0,
+                        margin: 0,
+                        borderColor: 'rgba(151, 151, 151, 1)'
+                }}
+                    placeholder="Search for your task..."
+
+                />
+                <FlatList
                     style={{flex: 1}}
                     refreshControl={<RefreshControl refreshing={isLoading} onRefresh={fetchTasks} tintColor={'white'}/>}
-                    initialNumToRender={1}
-                    windowSize={1}
-                    maxToRenderPerBatch={1}
+                    initialNumToRender={taskList.length}
+                    updateCellsBatchingPeriod={100}
+                    maxToRenderPerBatch={10}
                     keyExtractor={(item) => item.id}
+                    data={taskList}
                     renderItem={({item}) => (
-                        <Button
-                            additionalStyles={{
-                                margin: '12px',
-                                padding: '12px',
-                                backgroundColor: 'rgba(54, 54, 54, 1)',
-                            }}>
-                            <Task
-                                key={item.id}
-                                title={item.title}
-                                time={item.title}
-                                category={item.category}
-                                priority={item.priority}
-                            />
-                        </Button>
-                    )}
-                    getItemCount={() => (taskList.length)}
-                    getItem={() => (taskList)}
+                        <Task
+                            title={item.title}
+                            time={item.title}
+                            category={item.category}
+                            priority={item.priority}
+                        />
+                    )
+                    }
                 >
-                </VirtualizedList>
+                </FlatList>
             </Container>
         )
     }
