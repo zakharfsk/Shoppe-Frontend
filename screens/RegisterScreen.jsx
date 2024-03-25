@@ -5,7 +5,7 @@ import {Pressable, TextInput, View} from "react-native";
 import {Formik} from "formik";
 import * as Yup from "yup";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import {useAuth} from "../context/AuthContext";
 
 const RegisterSchema = Yup.object().shape({
     username: Yup.string()
@@ -25,19 +25,12 @@ const RegisterSchema = Yup.object().shape({
 
 
 const RegisterScreen = ({navigation}) => {
+    const {onLogin} = useAuth();
     const [buttonDisabled, setButtonDisabled] = useState(true);
     const insets = useSafeAreaInsets();
 
     const handleSubmitForm = async (values) => {
-        try {
-            await AsyncStorage.setItem('user', JSON.stringify({
-                username: values.username,
-                password: values.password
-            }))
-            navigation.navigate('Login')
-        } catch (e) {
-            console.log(e)
-        }
+        await onLogin(values.username, values.password)
     }
 
     const validateChanges = async (errors) => {
@@ -71,7 +64,6 @@ const RegisterScreen = ({navigation}) => {
                 validationSchema={RegisterSchema}
                 validate={validateChanges}>
                 {({handleChange, handleBlur, handleSubmit, values, errors}) => {
-                    console.log(errors)
                     return (
                         <FieldsLayout>
                             <View>

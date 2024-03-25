@@ -1,12 +1,13 @@
 import React, {useState} from 'react';
 import ArrowBack from "../assets/arrow-left.svg";
 import {Button, Container, FieldsLayout, Title} from "../styles/base.styles";
-import {Pressable, TextInput, View} from "react-native";
+import {Alert, Pressable, TextInput, View} from "react-native";
 import {Formik} from "formik";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 import * as Yup from 'yup';
 import {Toast} from "react-native-ui-lib";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import {useAuth} from "../context/AuthContext";
 
 const LoginSchema = Yup.object().shape({
     username: Yup.string()
@@ -21,21 +22,12 @@ const LoginSchema = Yup.object().shape({
 
 
 const LoginScreen = ({navigation}) => {
+    const {onLogin} = useAuth();
     const [buttonDisabled, setButtonDisabled] = useState(true);
     const insets = useSafeAreaInsets();
 
     const handleSubmitForm = async (values) => {
-        let user = await AsyncStorage.getItem('user')
-
-        if (user) {
-            let user_data = JSON.parse(user)
-            if (values.username === user_data.username && values.password === user_data.password) {
-                await AsyncStorage.setItem('isLogged', 'true')
-                navigation.navigate('BottomTabNav')
-            } else {
-                alert('Invalid credentials');
-            }
-        }
+        await onLogin(values.username, values.password)
     }
 
     const validateChanges = async (errors) => {

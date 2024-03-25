@@ -1,18 +1,19 @@
-import {Button, Container, Description} from "../styles/base.styles";
+import {Container, Description} from "../styles/base.styles";
 import Header from "../components/Header";
 import React, {useEffect, useState} from "react";
 import NoTask from "../components/NoTask";
 import Task from "../components/Task";
-import {ActivityIndicator, Alert, FlatList, RefreshControl, VirtualizedList} from "react-native";
-// import SearchBar from "../components/SearchBar";
-import { SearchBar } from '@rneui/themed';
+import SearchIcon from "../assets/search_icon.svg";
+import {ActivityIndicator, Alert, FlatList, RefreshControl} from "react-native";
+import {SearchBar} from '@rneui/themed';
 import axios from "axios";
 
 const HomeScreen = ({navigation}) => {
     const [isLoading, setIsLoading] = React.useState(true);
     const [taskList, setTaskList] = useState([]);
+    const [search, setSearch] = useState("");
 
-    const fetchTasks = () => {
+    const fetchTasks = async () => {
         setIsLoading(true);
         axios
             .get('https://65faf66f14650eb21008e799.mockapi.io/tasks')
@@ -20,16 +21,14 @@ const HomeScreen = ({navigation}) => {
                 setTaskList(data);
             })
             .catch((err) => {
-                console.log(err);
                 Alert.alert('Ошибка', 'Не удалось получить статьи');
             })
             .finally(() => {
                 setIsLoading(false);
             });
-        console.log(taskList)
     }
 
-    useEffect(fetchTasks, [])
+    useEffect(() => {(async () => await fetchTasks())()}, [])
 
     if (isLoading) {
         return (
@@ -58,20 +57,28 @@ const HomeScreen = ({navigation}) => {
             <Container>
                 <Header text={"Home"}/>
                 <SearchBar
+                    searchIcon={<SearchIcon/>}
                     containerStyle={{
-                        borderRadius: 4,
                         margin: 12,
-                        borderColor: 'rgba(151, 151, 151, 1)',
-                        backgroundColor: 'rgba(29, 29, 29, 1)',
-                }}
+                        padding: 0,
+                        borderColor: 'rgba(18, 18, 18, 1)',
+                        borderTopWidth: 0,
+                        borderBottomWidth: 0,
+                        backgroundColor: 'rgba(18, 18, 18, 1)',
+                    }}
                     inputContainerStyle={{
-                        backgroundColor: 'rgba(29, 29, 29, 1)',
                         padding: 0,
                         margin: 0,
+                        borderRadius: 4,
+                        backgroundColor: 'rgba(29, 29, 29, 1)',
                         borderColor: 'rgba(151, 151, 151, 1)'
-                }}
+                    }}
+                    inputStyle={{
+                        color: 'rgba(175, 175, 175, 1)'
+                    }}
+                    onChangeText={(text) => setSearch(text)}
+                    value={search}
                     placeholder="Search for your task..."
-
                 />
                 <FlatList
                     style={{flex: 1}}
@@ -88,8 +95,7 @@ const HomeScreen = ({navigation}) => {
                             category={item.category}
                             priority={item.priority}
                         />
-                    )
-                    }
+                    )}
                 >
                 </FlatList>
             </Container>

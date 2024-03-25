@@ -1,10 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 
 import HomeScreen from "../screens/HomeScreen";
 import {NavigationContainer} from "@react-navigation/native";
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import ThirdScreen from "../screens/IntroductionScreens/ThirdScreen";
 import FirstScreen from "../screens/IntroductionScreens/FirstScreen";
 import SecondScreen from "../screens/IntroductionScreens/SecondScreen";
@@ -21,6 +20,7 @@ import HomeIcon from "../assets/icons/home_page.svg";
 import CalendarScreen from "../screens/CalendarScreen";
 import FocusModeScreen from "../screens/FocusModeScreen";
 import UserProfileScreen from "../screens/UserProfileScreen";
+import {useAuth} from "../context/AuthContext";
 
 
 const BottomTabNavigator = createBottomTabNavigator();
@@ -36,52 +36,45 @@ const BottomTabNavigation = () => {
             headerShown: false,
         }}>
             <BottomTabNavigator.Screen options={{
-                tabBarIcon: ({ color, size }) => <HomeIcon color={color} size={size}/>
+                tabBarIcon: ({color, size}) => <HomeIcon color={color} size={size}/>
             }} name="Home" component={HomeScreen}/>
             <BottomTabNavigator.Screen options={{
-                tabBarIcon: ({ color, size }) => <CalendarIcon color={color} size={size}/>
+                tabBarIcon: ({color, size}) => <CalendarIcon color={color} size={size}/>
             }} name="Calendar" component={CalendarScreen}/>
             <BottomTabNavigator.Screen options={{
-                tabBarIcon: ({ color, size }) => <AddTaskIcon color={color} size={size}/>
+                tabBarIcon: ({color, size}) => <AddTaskIcon color={color} size={size}/>
             }} name="Add task" component={HomeScreen}/>
             <BottomTabNavigator.Screen options={{
-                tabBarIcon: ({ color, size }) => <FocusIcon color={color} size={size}/>
+                tabBarIcon: ({color, size}) => <FocusIcon color={color} size={size}/>
             }} name="Focuse" component={FocusModeScreen}/>
             <BottomTabNavigator.Screen options={{
-                tabBarIcon: ({ color, size }) => <UserProfileIcon color={color} size={size}/>
+                tabBarIcon: ({color, size}) => <UserProfileIcon color={color} size={size}/>
             }} name="Profile" component={UserProfileScreen}/>
         </BottomTabNavigator.Navigator>
     )
 }
 
-const Navigation = () => {
-    const [newUser, setNewUser] = useState(false)
+const NativeTabNavigation = () => {
+    return (
+        <NativeStackNavigator.Navigator screenOptions={{headerShown: false}}>
+            <NativeStackNavigator.Screen name="FirstStep" component={FirstScreen}/>
+            <NativeStackNavigator.Screen name="SecondStep" component={SecondScreen}/>
+            <NativeStackNavigator.Screen name="ThirdStep" component={ThirdScreen}/>
+            <NativeStackNavigator.Screen name="GetStarted" component={GetStartedScreen}/>
+            <NativeStackNavigator.Screen name="Register" component={RegisterScreen}/>
+            <NativeStackNavigator.Screen name="Login" component={LoginScreen}/>
+        </NativeStackNavigator.Navigator>
+    )
+}
 
-    useEffect(() => {
-        (async () => {
-            const value = await AsyncStorage.getItem('isLogged');
-            if (value === null || value === 'false') {
-                setNewUser(true)
-                return true;
-            }
-            return false;
-        })()
-    }, [])
+const Navigation = () => {
+    const {authState} = useAuth();
 
     return (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <SafeAreaProvider>
                 <NavigationContainer>
-                    <NativeStackNavigator.Navigator screenOptions={{headerShown: false}}>
-                        {!newUser ? <NativeStackNavigator.Screen name="BottomTabNav" component={BottomTabNavigation}
-                                                                 options={{gestureEnabled: false}}/> : {}}
-                        <NativeStackNavigator.Screen name="FirstStep" component={FirstScreen}/>
-                        <NativeStackNavigator.Screen name="SecondStep" component={SecondScreen}/>
-                        <NativeStackNavigator.Screen name="ThirdStep" component={ThirdScreen}/>
-                        <NativeStackNavigator.Screen name="GetStarted" component={GetStartedScreen}/>
-                        <NativeStackNavigator.Screen name="Register" component={RegisterScreen}/>
-                        <NativeStackNavigator.Screen name="Login" component={LoginScreen}/>
-                    </NativeStackNavigator.Navigator>
+                    {authState?.authenticated ? (<BottomTabNavigation/>) : (<NativeTabNavigation/>)}
                 </NavigationContainer>
             </SafeAreaProvider>
         </TouchableWithoutFeedback>

@@ -2,8 +2,10 @@ import React, {useState} from 'react';
 import {Button, Container, Title} from "../styles/base.styles";
 import {Image} from "react-native";
 import ImageLoader from "./ImageLoader";
+import {useAuth} from "../context/AuthContext";
 
 const Header = ({text}) => {
+    const {onLogout} = useAuth();
     const [imageIsLoading, setImageIsLoading] = useState(true)
 
     return (
@@ -17,15 +19,12 @@ const Header = ({text}) => {
             marginRight: 24
         }}>
             <Title margin={"0px"}>{text}</Title>
-            <Button>
+            <Button onPress={async () => await onLogout()}>
                 {
                     imageIsLoading && <ImageLoader/>
                 }
                 <Image
-                    onLoadEnd={() => {
-                        console.log('Image loaded')
-                        setImageIsLoading(false)
-                    }}
+                    onLoadEnd={() => setImageIsLoading(false)}
                     style={imageIsLoading ? {
                         position: 'absolute',
                         borderRadius: 50,
