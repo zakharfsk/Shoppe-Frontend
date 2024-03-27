@@ -15,7 +15,7 @@ const HomeScreen = ({navigation}) => {
 
     const fetchTasks = async () => {
         setIsLoading(true);
-        axios
+        await axios
             .get('https://65faf66f14650eb21008e799.mockapi.io/tasks')
             .then(({data}) => {
                 setTaskList(data);
@@ -91,7 +91,7 @@ const HomeScreen = ({navigation}) => {
                     renderItem={({item}) => (
                         <Task
                             title={item.title}
-                            time={item.title}
+                            time={item.createdAt}
                             category={item.category}
                             priority={item.priority}
                         />

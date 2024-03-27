@@ -2,7 +2,12 @@ import styled from "styled-components/native";
 
 export const Container = styled.SafeAreaView`
     flex: 1;
-    background-color: #121212;
+    background-color: ${props => props.backgroundColor || '#121212'};
+    ${props => props.additionalStyles};
+`
+
+export const Text = styled.Text`
+    color: ${props => props.color || 'white'};
 `
 
 export const Title = styled.Text`
