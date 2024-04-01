@@ -11,7 +11,7 @@ import axios from "axios";
 const HomeScreen = ({navigation}) => {
     const [isLoading, setIsLoading] = React.useState(true);
     const [taskList, setTaskList] = useState([]);
-    const [search, setSearch] = useState("");
+    const [searchText, setSearchTest] = useState("");
 
     const fetchTasks = async () => {
         setIsLoading(true);
@@ -21,11 +21,22 @@ const HomeScreen = ({navigation}) => {
                 setTaskList(data);
             })
             .catch((err) => {
-                Alert.alert('Ошибка', 'Не удалось получить статьи');
+                console.log(err)
+                Alert.alert('Ошибка', 'Не вдалося отримати список завдань');
             })
             .finally(() => {
                 setIsLoading(false);
             });
+    }
+
+    const search = async (text) => {
+        setSearchTest(text);
+        // for (const taskListElement of taskList) {
+        //
+        //     if (taskListElement.title.includes(text)) {
+        //
+        //     }
+        // }
     }
 
     useEffect(() => {(async () => await fetchTasks())()}, [])
@@ -46,7 +57,7 @@ const HomeScreen = ({navigation}) => {
     if (taskList.length === 0) {
         return (
             <Container>
-                <Header text={"Home"}/>
+                <Header navigation={navigation} text={"Home"}/>
                 <NoTask/>
             </Container>
         )
@@ -55,7 +66,7 @@ const HomeScreen = ({navigation}) => {
     if (taskList.length > 0) {
         return (
             <Container>
-                <Header text={"Home"}/>
+                <Header navigation={navigation} text={"Home"}/>
                 <SearchBar
                     searchIcon={<SearchIcon/>}
                     containerStyle={{
@@ -76,8 +87,8 @@ const HomeScreen = ({navigation}) => {
                     inputStyle={{
                         color: 'rgba(175, 175, 175, 1)'
                     }}
-                    onChangeText={(text) => setSearch(text)}
-                    value={search}
+                    onChangeText={async (text) => await search(text)}
+                    value={searchText}
                     placeholder="Search for your task..."
                 />
                 <FlatList
@@ -95,8 +106,7 @@ const HomeScreen = ({navigation}) => {
                             category={item.category}
                             priority={item.priority}
                         />
-                    )}
-                >
+                    )}>
                 </FlatList>
             </Container>
         )

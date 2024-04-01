@@ -2,10 +2,10 @@ import React from 'react';
 import {Container} from "../styles/base.styles";
 import Header from "../components/Header";
 
-const UserProfileScreen = () => {
+const UserProfileScreen = ({navigation}) => {
     return (
         <Container>
-            <Header text={"User Profile"}/>
+            <Header navigation={navigation} text={"User Profile"}/>
         </Container>
     );
 };

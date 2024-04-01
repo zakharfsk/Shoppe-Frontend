@@ -3,19 +3,26 @@ import {Button, Container, Description} from "../styles/base.styles";
 import {RadioButton} from "react-native-ui-lib";
 import Priority from "./Priority";
 import Category from "./Category";
+import moment from "moment";
 
 const Task = ({title, time, category, priority}) => {
 
-    const cattingTitle = (title) => {
-        if (title.length > 30) {
-            return title.slice(0, 20) + '...';
+    const cattingText = (text) => {
+        if (text.length > 20) {
+            return text.slice(0, 20) + '...';
         }
-        return title;
+        return text;
     }
 
     const formatTime = (time) => {
-        const date = new Date(time);
-        return `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
+        return moment(time).calendar({
+            sameDay: '[Today at] HH:mm',
+            nextDay: '[Tomorrow at] HH:mm',
+            nextWeek: 'dddd [at] HH:mm',
+            lastDay: '[Yesterday at] HH:mm',
+            lastWeek: '[Last] dddd [at] HH:mm',
+            sameElse: 'DD.MM.YYYY HH:mm'
+        });
     }
 
     return (
@@ -23,30 +30,28 @@ const Task = ({title, time, category, priority}) => {
             flex: 1,
             flexDirection: 'row',
             margin: '12px',
-            padding: '15px',
-            // backgroundColor: 'rgba(54, 54, 54, 1)' ,
-            backgroundColor: 'rgb(200, 135, 231)',
+            padding: '10px',
+            backgroundColor: 'rgba(54, 54, 54, 1)',
             borderRadius: '4px',
             overflow: 'hidden'
         }}>
-            <Container style={{flexDirection: 'row'}}>
-                <Container style={{
-                    flex: 2,
-                    flexDirection: 'column',
-                    alignItems: 'flex-start',
-                    gap: '6px'
-                }} backgroundColor={'rgb(134, 135, 231)'}>
-                    <Description margin={'0px'}>{cattingTitle(title)}</Description>
+            <Container
+                additionalStyles={{gap: '20px'}}
+                backgroundColor={'rgba(54, 54, 54, 1)'}>
+                <Container
+                    additionalStyles={{alignItems: 'flex-start'}}
+                    backgroundColor={'rgba(54, 54, 54, 1)'}>
+                    <Description margin={'0px'}>{cattingText(title)}</Description>
                     <Description margin={'0px'}>{formatTime(time)}</Description>
                 </Container>
-                <Container style={{
-                    flex: 1,
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                    alignItems: 'flex-end',
-                    gap: '12px',
-                }}>
-                    <Category category={category}/>
+                <Container
+                    additionalStyles={{
+                        flexDirection: 'row',
+                        alignItems: 'flex-end'
+                    }}
+                    backgroundColor={'rgba(54, 54, 54, 1)'}>
+                    <Category category={cattingText(category)}/>
+                    <Container additionalStyles={{flex: 0.2}}/>
                     <Priority priority={priority}/>
                 </Container>
             </Container>

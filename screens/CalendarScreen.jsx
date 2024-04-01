@@ -2,10 +2,10 @@ import React from 'react';
 import {Container} from "../styles/base.styles";
 import Header from "../components/Header";
 
-const CalendarScreen = () => {
+const CalendarScreen = ({navigation}) => {
     return (
         <Container>
-            <Header text={"Calendar"}/>
+            <Header navigation={navigation} text={"Calendar"}/>
         </Container>
     );
 };

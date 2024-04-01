@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 
 import HomeScreen from "../screens/HomeScreen";
 import {NavigationContainer} from "@react-navigation/native";
@@ -21,12 +21,13 @@ import CalendarScreen from "../screens/CalendarScreen";
 import FocusModeScreen from "../screens/FocusModeScreen";
 import UserProfileScreen from "../screens/UserProfileScreen";
 import {useAuth} from "../context/AuthContext";
+import CreateTaskScreen from "../screens/CreateTaskScreen";
 
 
 const BottomTabNavigator = createBottomTabNavigator();
 const NativeStackNavigator = createNativeStackNavigator();
 
-const BottomTabNavigation = () => {
+const BottomTabNavigation = ({navigation}) => {
     return (
         <BottomTabNavigator.Navigator screenOptions={{
             tabBarStyle: {
@@ -35,21 +36,28 @@ const BottomTabNavigation = () => {
             },
             headerShown: false,
         }}>
-            <BottomTabNavigator.Screen options={{
-                tabBarIcon: ({color, size}) => <HomeIcon color={color} size={size}/>
-            }} name="Home" component={HomeScreen}/>
-            <BottomTabNavigator.Screen options={{
-                tabBarIcon: ({color, size}) => <CalendarIcon color={color} size={size}/>
-            }} name="Calendar" component={CalendarScreen}/>
-            <BottomTabNavigator.Screen options={{
-                tabBarIcon: ({color, size}) => <AddTaskIcon color={color} size={size}/>
-            }} name="Add task" component={HomeScreen}/>
-            <BottomTabNavigator.Screen options={{
-                tabBarIcon: ({color, size}) => <FocusIcon color={color} size={size}/>
-            }} name="Focuse" component={FocusModeScreen}/>
-            <BottomTabNavigator.Screen options={{
-                tabBarIcon: ({color, size}) => <UserProfileIcon color={color} size={size}/>
-            }} name="Profile" component={UserProfileScreen}/>
+            <BottomTabNavigator.Group>
+                <BottomTabNavigator.Screen options={{
+                    tabBarLabel: 'Home',
+                    tabBarIcon: ({color, size}) => <HomeIcon color={color} size={size}/>
+                }} name="HomeScreen" component={HomeScreen}/>
+                <BottomTabNavigator.Screen options={{
+                    tabBarLabel: 'Calendar',
+                    tabBarIcon: ({color, size}) => <CalendarIcon color={color} size={size}/>
+                }} name="CalendarScreen" component={CalendarScreen}/>
+                <BottomTabNavigator.Screen options={{
+                    tabBarLabel: 'Add task',
+                    tabBarIcon: ({color, size}) => <AddTaskIcon color={color} size={size}/>
+                }} name="CreateTaskScreen" component={CreateTaskScreen}/>
+                <BottomTabNavigator.Screen options={{
+                    tabBarLabel: 'Focuses',
+                    tabBarIcon: ({color, size}) => <FocusIcon color={color} size={size}/>
+                }} name="FocuseScreen" component={FocusModeScreen}/>
+                <BottomTabNavigator.Screen options={{
+                    tabBarLabel: 'Profile',
+                    tabBarIcon: ({color, size}) => <UserProfileIcon color={color} size={size}/>
+                }} name="ProfileScreen" component={UserProfileScreen}/>
+            </BottomTabNavigator.Group>
         </BottomTabNavigator.Navigator>
     )
 }

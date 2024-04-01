@@ -2,10 +2,10 @@ import React from 'react';
 import {Container} from "../styles/base.styles";
 import Header from "../components/Header";
 
-const FocusModeScreen = () => {
+const FocusModeScreen = ({navigation}) => {
     return (
         <Container>
-            <Header text={"Focus Mode"}/>
+            <Header navigation={navigation} text={"Focus Mode"}/>
         </Container>
     );
 };

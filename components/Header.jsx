@@ -2,10 +2,8 @@ import React, {useState} from 'react';
 import {Button, Container, Title} from "../styles/base.styles";
 import {Image} from "react-native";
 import ImageLoader from "./ImageLoader";
-import {useAuth} from "../context/AuthContext";
 
-const Header = ({text}) => {
-    const {onLogout} = useAuth();
+const Header = ({navigation, text}) => {
     const [imageIsLoading, setImageIsLoading] = useState(true)
 
     return (
@@ -19,7 +17,7 @@ const Header = ({text}) => {
             marginRight: 24
         }}>
             <Title margin={"0px"}>{text}</Title>
-            <Button onPress={async () => await onLogout()}>
+            <Button onPress={async () => navigation.navigate('ProfileScreen')}>
                 {
                     imageIsLoading && <ImageLoader/>
                 }

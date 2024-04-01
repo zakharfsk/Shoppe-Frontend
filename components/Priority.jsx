@@ -5,13 +5,15 @@ import {Container, Text} from "../styles/base.styles";
 const Priority = ({priority}) => {
     return (
         <Container additionalStyles={{
-            // borderColor: priority === 'High' ? 'red' : priority === 'Medium' ? 'orange' : 'green',
+            flex: 0.3,
             borderWidth: '1px',
-            padding: '8px 4px',
+            borderRadius: '4px',
+            borderColor: 'rgba(134, 135, 231, 1.00)',
             flexDirection: 'row',
-            justifyContent: 'space-evenly',
+            justifyContent: 'center',
             alignItems: 'center',
-        }}>
+            gap: '5px',
+        }}  backgroundColor={'rgba(54, 54, 54, 1)'}>
             <FlagSvg width={14} height={14}/>
             <Text>{priority}</Text>
         </Container>
