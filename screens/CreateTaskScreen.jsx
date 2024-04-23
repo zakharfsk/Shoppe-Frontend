@@ -1,7 +1,7 @@
 import React from 'react';
-import {Text, TextInput} from "react-native";
+import {ScrollView, Text, TextInput} from "react-native";
 import SendIcon from '../assets/vuesax_outline_send.svg';
-import {Button, Container, Description} from "../styles/base.styles";
+import {Button, Container, Title} from "../styles/base.styles";
 import {Formik} from "formik";
 
 const CreateTaskScreen = () => {
@@ -11,42 +11,53 @@ const CreateTaskScreen = () => {
     }
 
     return (
-        <Container style={{
-            backgroundColor: 'rgba(54, 54, 54, 1)',
-        }}>
-            <Formik initialValues={{t: ''}} onSubmit={handleSubmit}>
+        <Container backgroundColor={'rgba(54, 54, 54, 1)'} style={{flex: 1}}>
+            <Formik initialValues={{}} onSubmit={handleSubmit}>
                 {({handleChange, handleBlur, handleSubmit, values}) => (
-                    <Container>
-                        <Description>Title</Description>
-                        <TextInput
-                            onChangeText={handleChange('title')}
-                            onBlur={handleBlur('title')}
-                            value={values.title}
-                        />
-                        <Description>Category</Description>
-                        <TextInput
-                            onChangeText={handleChange('category')}
-                            onBlur={handleBlur('category')}
-                            value={values.category}
-                        />
-                        <Description>Priority</Description>
-                        <TextInput
-                            onChangeText={handleChange('priority')}
-                            onBlur={handleBlur('priority')}
-                            value={values.priority}
-                        />
-                        <Container style={{backgroundColor: 'red'}}>
+                    <Container backgroundColor={'rgba(54, 54, 54, 1)'}>
+                        <ScrollView style={{padding: 12}}>
+                            <Title>Title</Title>
+                            <TextInput
+                                style={{backgroundColor: 'white'}}
+                                onChangeText={handleChange('title')}
+                                onBlur={handleBlur('title')}
+                                value={values.title}
+                            />
+                            <Title>Description</Title>
+                            <TextInput
+                                style={{backgroundColor: 'white'}}
+                                onChangeText={handleChange('description')}
+                                onBlur={handleBlur('description')}
+                                value={values.description}
+                            />
+                            <Title>Category</Title>
+                            <TextInput
+                                style={{backgroundColor: 'white'}}
+                                onChangeText={handleChange('category')}
+                                onBlur={handleBlur('category')}
+                                value={values.category}
+                            />
+                            <Title>Priority</Title>
+                            <TextInput
+                                style={{backgroundColor: 'white'}}
+                                onChangeText={handleChange('priority')}
+                                onBlur={handleBlur('priority')}
+                                value={values.priority}
+                            />
+                        </ScrollView>
+                        <Container style={{
+                            flexDirection: 'column-reverse',
+                            alignItems: 'flex-end',
+                        }} backgroundColor={'rgba(54, 14, 54, 1)'}>
                             <Button style={{
-                                backgroundColor: 'white',
                                 justifyContent: 'flex-end',
                                 alignItems: 'flex-end',
-                                padding: 10,
                                 borderRadius: 10,
-                                textAlign: 'center',
+                                textAlign: 'center'
                             }}>
                                 <SendIcon
-                                    width={40}
-                                    height={40}
+                                    width={50}
+                                    height={50}
                                 />
                             </Button>
                         </Container>
